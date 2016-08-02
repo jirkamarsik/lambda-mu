@@ -1,10 +1,14 @@
 module LambdaMu (Atomic : Set) (ι ο ⊥ : Atomic) where
 
 open import Data.Nat using (ℕ)
-open import Data.Fin using (Fin; zero; suc)
+open import Data.Fin using (Fin)
 open import Data.Vec using (Vec; []; _∷_; lookup)
 
+import NumberFin
+
 infixr 7 _⇒_
+infixl 8 _∨_
+infixl 9 _∧_
 data Type : Set where
   base : Atomic → Type
   _⇒_ : (a b : Type) → Type
@@ -38,4 +42,4 @@ mutual
     <_∣_> : {A : Type} → (t : Term Γ Δ A) → (e : Continuation Γ Δ A) → Command Γ Δ
 
 devil : ∀ {a : Type} → Term [] [] (a ∨ ¬ a)
-devil = μ < inj₂ (lam (μ < inj₁ (var zero) ∣ var (suc zero) >)) ∣ var zero >
+devil = μ < inj₂ (lam (μ < inj₁ (var 0) ∣ var 1 >)) ∣ var 0 >
